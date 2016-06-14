@@ -20,27 +20,27 @@ $ npm install
 # 開発時に使うコマンド
 - ソースファイルをコンパイル
   - 全部一回コンパイル
-  ```sh
-  $ gulp
-  ```
+```sh
+$ gulp
+```
 
   - ファイルの変更を監視して自動コンパイル (^Cで終了)
-  ```sh
-  $ gulp watch
-  ```
+```sh
+$ gulp watch
+```
   もしくは
-  ```sh
-  $ gulp w
-  ```
+```sh
+$ gulp w
+```
 
   - サーバー起動 (^Cで終了)
-  ```sh
-  $ gulp sever
-  ```
+```sh
+$ gulp sever
+```
   もしくは
-  ```sh
-  $ gulp s
-  ```
+```sh
+$ gulp s
+```
 
 ---
 
