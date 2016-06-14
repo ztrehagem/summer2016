@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');
 var uglify = require('gulp-uglify');
+var plumber = require("gulp-plumber");
 var concat = require('gulp-concat');
 var nop = require('gulp-nop');
 
@@ -22,6 +23,7 @@ gulp.task('sass', function() {
 
   (Array.isArray(tasks.sass) ? tasks.sass : [tasks.sass]).forEach(function(task) {
     gulp.src(task.src)
+    .pipe(plumber())
     .pipe(sass())
     .pipe(gulp.dest(task.dest));
   });
@@ -32,6 +34,7 @@ gulp.task('js', function() {
 
   (Array.isArray(tasks.js) ? tasks.js : [tasks.js]).forEach(function(task) {
     gulp.src(task.src)
+    .pipe(plumber())
     .pipe(uglify())
     .pipe(task.concat ? concat(task.destfile) : nop())
     .pipe(gulp.dest(task.dest))
