@@ -6,23 +6,7 @@ var plumber = require("gulp-plumber");
 var browser = require("browser-sync");
 var concat = require('gulp-concat');
 var nop = require('gulp-nop');
-
-var tasks = {
-  sass: { // can wrap array
-    src: 'assets/sass/**/*.scss', // can wrap array
-    dest: 'public/css/'
-  },
-  js: {
-    src: 'assets/js/**/*.js',
-    dest: 'public/js/',
-    concat: false,
-    destfile: 'app.js'
-  },
-  html: {
-    src: 'assets/html/**/*.html',
-    dest: 'public/'
-  }
-};
+var tasks = require('./gulp-tasks.js');
 
 gulp.task('sass', function() {
   forEachTask(tasks.sass, function(task) {
