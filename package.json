@@ -1,0 +1,26 @@
+{
+  "name": "summer2016",
+  "version": "1.0.0",
+  "description": "- `GET` `/api/student/list.json` - `POST` `/api/student/update.json` - `GET` `/api/location/list.json`",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/megahertz/summer2016.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/megahertz/summer2016/issues"
+  },
+  "homepage": "https://gitlab.com/megahertz/summer2016#README",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-nop": "0.0.3",
+    "gulp-sass": "^2.3.1",
+    "gulp-uglify": "^1.5.3"
+  }
+}
