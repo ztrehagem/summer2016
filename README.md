@@ -48,6 +48,7 @@ $ npm install
 
 - `GET` `/api/student/list.json`
 - `POST` `/api/student/update.json`
+  - `{"id":id, "location":location}`
 - `GET` `/api/location/list.json`
 
 - APIドキュメントあるらしい

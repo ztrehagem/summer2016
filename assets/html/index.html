@@ -9,6 +9,10 @@
     <title>this is test</title>
 </head>
 <body>
-    it works!!!
+    <div ng-controller="testController as c">
+        <ul>
+            <li ng-repeat="item in c.list" ng-bind="item | json"></li>
+        </ul>
+    </div>
 </body>
 </html>

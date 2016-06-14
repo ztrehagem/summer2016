@@ -1,0 +1,58 @@
+[
+    {
+        "id": "1",
+        "location": "食堂",
+        "image": "cafeteria",
+        "color": "#eb0023",
+        "msg": "Lets go to cafeteria :)"
+    },
+    {
+        "id": "2",
+        "location": "授業中",
+        "image": "class",
+        "color": "#32aa39",
+        "msg": "Do your best !"
+    },
+    {
+        "id": "3",
+        "location": "生協",
+        "image": "coop",
+        "color": "#f8a12e",
+        "msg": "Have a good shopping :P"
+    },
+    {
+        "id": "4",
+        "location": "実験室",
+        "image": "fkdsroom",
+        "color": "#21ffff",
+        "msg": "Work hard :>"
+    },
+    {
+        "id": "5",
+        "location": "外出",
+        "image": "goout",
+        "color": "#1d9abd",
+        "msg": "Have a good day :D"
+    },
+    {
+        "id": "6",
+        "location": "帰宅",
+        "image": "home",
+        "color": "#0c572a",
+        "msg": "Good job!!"
+    },
+    {
+        "id": "7",
+        "location": "研究室",
+        "image": "lab",
+        "color": "#221f80",
+        "msg": "Welcome to FKD Lab"
+    },
+    {
+        "id": "8",
+        "location": "図書室",
+        "image": "library",
+        "color": "#fbed1c",
+        "msg": "Let's go to 8F"
+    }
+]

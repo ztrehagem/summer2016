@@ -4,7 +4,10 @@ module.exports = {
     dest: 'public/css/'
   },
   js: {
-    src: 'assets/js/**/*.js',
+    src: [
+      'assets/js/*.js',
+      'assets/js/*/**/*.js'
+    ],
     dest: 'public/js/',
     concat: true,
     destfile: 'app.js'
