@@ -25,9 +25,7 @@ var tasks = {
 };
 
 gulp.task('sass', function() {
-  if( !tasks.sass ) return;
-
-  (Array.isArray(tasks.sass) ? tasks.sass : [tasks.sass]).forEach(function(task) {
+  forEachTask(tasks.sass, function(task) {
     gulp.src(task.src)
       .pipe(plumber())
       .pipe(sass())
@@ -36,9 +34,7 @@ gulp.task('sass', function() {
 });
 
 gulp.task('js', function() {
-  if( !tasks.js ) return;
-
-  (Array.isArray(tasks.js) ? tasks.js : [tasks.js]).forEach(function(task) {
+  forEachTask(tasks.js, function(task) {
     gulp.src(task.src)
       .pipe(plumber())
       .pipe(uglify())
@@ -48,9 +44,7 @@ gulp.task('js', function() {
 });
 
 gulp.task('html', function() {
-  if( !tasks.html ) return;
-
-  (Array.isArray(tasks.html) ? tasks.html : [tasks.html]).forEach(function(task) {
+  forEachTask(tasks.html, function(task) {
     gulp.src(task.src)
       .pipe(plumber())
       .pipe(html())
@@ -66,9 +60,9 @@ gulp.task('default', [
 
 gulp.task('w', ['watch']);
 gulp.task('watch', ['default'], function() {
-  for( prop in tasks ) {
-    (Array.isArray(tasks[prop]) ? tasks[prop] : [tasks[prop]]).forEach(function(task) {
-      gulp.watch(task.src, [prop]);
+  for( taskname in tasks ) {
+    forEachTask(tasks[taskname], function(task) {
+      gulp.watch(task.src, [taskname]);
     });
   }
 });
@@ -81,3 +75,8 @@ gulp.task('server', function() {
     }
   });
 });
+
+function forEachTask(tasks, fn) {
+  if( !tasks ) return;
+  (Array.isArray(tasks) ? tasks : [tasks]).forEach(fn);
+}
