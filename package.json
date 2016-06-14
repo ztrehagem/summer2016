@@ -17,8 +17,10 @@
   },
   "homepage": "https://gitlab.com/megahertz/summer2016#README",
   "devDependencies": {
+    "browser-sync": "^2.13.0",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
+    "gulp-minify-html": "^1.0.6",
     "gulp-nop": "0.0.3",
     "gulp-plumber": "^1.1.0",
     "gulp-sass": "^2.3.1",
