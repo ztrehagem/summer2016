@@ -6,7 +6,7 @@ module.exports = {
   js: {
     src: 'assets/js/**/*.js',
     dest: 'public/js/',
-    concat: false,
+    concat: true,
     destfile: 'app.js'
   },
   html: {
