@@ -21,8 +21,8 @@ gulp.task('js', function() {
   forEachTask(tasks.js, function(task) {
     gulp.src(task.src)
       .pipe(plumber())
-      .pipe(uglify())
       .pipe(task.concat ? concat(task.destfile) : nop())
+      .pipe(uglify())
       .pipe(gulp.dest(task.dest));
   });
 });
