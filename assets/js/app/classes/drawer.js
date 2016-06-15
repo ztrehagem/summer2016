@@ -1,7 +1,7 @@
 modules.app
 
-.factory('drawer', ['apis', function(apis) {
-  var x = 0, y = 0;
+.factory('drawer', ['Students', function(Students) {
+  var students;
 
   function clear(ctx, canvas) {
     ctx.fillStyle = '#333';
@@ -9,18 +9,20 @@ modules.app
   }
 
   return {
+    init: function(ctx, canvas) {
+      students = new Students(ctx, canvas);
+    },
     update: function(ctx, canvas) {
-      x++;
-      y++;
+
+      // TODO onResize でやる
+      ctx.font = "28px 'Hiragino Kaku Gothic ProN'";
+      ctx.textAlign = 'center';
+
+      students.update(ctx, canvas);
     },
     draw: function(ctx, canvas) {
       clear(ctx, canvas);
-
-      ctx.fillStyle = '#fff';
-      ctx.beginPath();
-      ctx.arc(x, y, 10, 0, 2 * Math.PI, false);
-      ctx.closePath();
-      ctx.fill();
+      students.draw(ctx, canvas);
     }
   }
 }]);

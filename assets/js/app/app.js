@@ -8,6 +8,7 @@ angular.module('app')
   setCanvasWidth();
   $window.addEventListener('resize', setCanvasWidth);
 
+  drawer.init(ctx, canvas);
   frame();
 
   function frame() {

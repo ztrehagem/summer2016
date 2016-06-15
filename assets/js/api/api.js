@@ -10,8 +10,8 @@ modules.api
   };
 
   return {
-    getUsers: res.studentList.query,
-    updateUser: res.updateUser.save,
+    getStudentList: res.studentList.query,
+    updateStudent: res.updateUser.save,
     getLocations: res.locationList.query
   };
 }]);
