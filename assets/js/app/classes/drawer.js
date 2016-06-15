@@ -1,4 +1,4 @@
-angular.module('app')
+modules.app
 
 .factory('drawer', ['apis', function(apis) {
   var x = 0, y = 0;

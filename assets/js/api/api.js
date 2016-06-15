@@ -1,4 +1,4 @@
-angular.module('api')
+modules.api
 
 .factory('apis', ['$resource', function($resource) {
   var prefix = '/api-mock';

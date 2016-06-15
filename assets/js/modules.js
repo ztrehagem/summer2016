@@ -1,7 +1,9 @@
-angular.module('api', [
+var modules = {};
+
+modules.api = angular.module('api', [
   'ngResource'
 ]);
 
-angular.module('app', [
+modules.app = angular.module('app', [
   'api'
 ]);
