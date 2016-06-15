@@ -19,7 +19,7 @@ angular.module('app')
   }
 
   function setCanvasWidth() {
-    canvas.width = $window.innerWidth;
-    canvas.height = $window.innerHeight;
+    canvas.width = $window.innerWidth - 60;
+    canvas.height = $window.innerHeight - 60;
   }
 }]);

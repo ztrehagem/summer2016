@@ -119,7 +119,7 @@ modules.app
         this.timer = $timeout(function() {
           that.open = true;
           that.timer = null;
-        }, 500);
+        }, 1000);
       }
     } else {
       this.open = this.on = false;
