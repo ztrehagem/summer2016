@@ -1,6 +1,6 @@
 angular.module('app')
 
-.run(['$window', '$document', 'canvasDrawer', function($window, $document, canvasDrawer) {
+.run(['$window', '$document', 'drawer', function($window, $document, drawer) {
   var canvas = $document.find('canvas')[0];
   var ctx = canvas.getContext('2d');
   var requestAnimationFrame = $window.requestAnimationFrame || $window.mozRequestAnimationFrame || $window.webkitRequestAnimationFrame || $window.msRequestAnimationFrame;
@@ -11,8 +11,8 @@ angular.module('app')
   frame();
 
   function frame() {
-    canvasDrawer.update(ctx, canvas);
-    canvasDrawer.draw(ctx, canvas);
+    drawer.update(ctx, canvas);
+    drawer.draw(ctx, canvas);
     requestAnimationFrame(frame);
   }
 

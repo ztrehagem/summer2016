@@ -1,6 +1,6 @@
 angular.module('app')
 
-.factory('canvasDrawer', ['apis', function(apis) {
+.factory('drawer', ['apis', function(apis) {
   var x = 0, y = 0;
 
   function clear(ctx, canvas) {
