@@ -23,14 +23,19 @@ modules.app
       });
     });
 
+    that.open = false;
+
     this.students.forEach(function(student) {
+      that.open = that.open || student.checkMouse();
       student.update(ctx, canvas);
     });
   };
 
   Students.prototype.draw = function(ctx, canvas) {
+    var that = this;
+
     this.students.forEach(function(student) {
-      student.draw(ctx, canvas);
+      student.draw(ctx, canvas, that.open);
     });
   };
 

@@ -4,7 +4,7 @@ modules.app
   var students;
 
   function clear(ctx, canvas) {
-    ctx.fillStyle = '#333';
+    ctx.fillStyle = 'rgb(250, 250, 250)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   }
 
