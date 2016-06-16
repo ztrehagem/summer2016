@@ -1,5 +1,6 @@
 modules.app
 
+// TODO コンストラクタをやめる
 .factory('Students', ['Student', 'apis', function(Student, apis) {
 
   function Students(ctx, canvas) {
@@ -23,12 +24,14 @@ modules.app
       });
     });
 
-    that.open = false;
+    that.open = null;
 
     this.students.forEach(function(student) {
       that.open = that.open || student.checkMouse();
       student.update(ctx, canvas);
     });
+
+    return this.open;
   };
 
   Students.prototype.draw = function(ctx, canvas) {

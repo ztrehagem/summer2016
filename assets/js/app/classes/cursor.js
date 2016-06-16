@@ -4,7 +4,7 @@ modules.app
   var that = this;
 
   this.onMouseMove = function(e) {
-    that.x = e.clientX - 30;
-    that.y = e.clientY - 30;
+    that.x = e.clientX;
+    that.y = e.clientY;
   };
 }]);

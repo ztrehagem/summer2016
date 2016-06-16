@@ -4,6 +4,10 @@ modules.app
 
   const SPEED_MAX = 0.7;
   const NAME_OFFSET_Y = 40;
+  const WALL_MARGIN = 30;
+  const AIR_RESITANCE = 0.0001;
+  const RANDOMIZE = 1200;
+  const OPEN_DELAY = 750;
 
   function Student(id, name, location, ctx, canvas) {
     this.id = id;
@@ -21,49 +25,50 @@ modules.app
   Student.prototype.update = function(ctx, canvas) {
     this.calcWallResistance(canvas);
     this.calcAirResistance();
-    this.adjustSpeed();
+    this.limimtSpeed();
     this.applyRandomSpeed();
     this.calcPosition();
   };
 
   // 壁にぶつかる
   Student.prototype.calcWallResistance = function(canvas) {
-    if( this.x < this.r ) {
+    if( this.x < this.r + WALL_MARGIN ) {
       this.dx *= -1;
-      this.x = this.r;
+      this.x = this.r + WALL_MARGIN;
     }
-    if( this.x > canvas.width - this.r ) {
+    if( this.x > canvas.width - this.r - WALL_MARGIN ) {
       this.dx *= -1;
-      this.x = canvas.width - this.r;
+      this.x = canvas.width - this.r - WALL_MARGIN;
     }
-    if( this.y < this.r ) {
+    if( this.y < this.r + WALL_MARGIN ) {
       this.dy *= -1;
-      this.y = this.r;
+      this.y = this.r + WALL_MARGIN;
     }
-    if( this.y > canvas.height - this.r ) {
+    if( this.y > canvas.height - this.r - WALL_MARGIN ) {
       this.dy *= -1;
-      this.y = canvas.height - this.r;
+      this.y = canvas.height - this.r - WALL_MARGIN;
     }
   };
 
   // 空気抵抗で減衰
   Student.prototype.calcAirResistance = function() {
+    // TODO 完全にゼロにする
     if( this.dx < 0 ) {
-      this.dx += 0.0001;
+      this.dx += AIR_RESITANCE;
     }
     if( this.dx > 0 ) {
-      this.dx -= 0.0001;
+      this.dx -= AIR_RESITANCE;
     }
     if( this.dy < 0 ) {
-      this.dy += 0.0001;
+      this.dy += AIR_RESITANCE;
     }
     if( this.dy > 0 ) {
-      this.dy -= 0.0001;
+      this.dy -= AIR_RESITANCE;
     }
   };
 
   // 速度制限をかける
-  Student.prototype.adjustSpeed = function() {
+  Student.prototype.limimtSpeed = function() {
     if( this.dx > SPEED_MAX ) this.dx = SPEED_MAX;
     if( this.dx < -SPEED_MAX ) this.dx = -SPEED_MAX;
     if( this.dy > SPEED_MAX ) this.dy = SPEED_MAX;
@@ -72,7 +77,7 @@ modules.app
 
   // ランダムに速度が突然変異する
   Student.prototype.applyRandomSpeed = function() {
-    if( Math.floor(Math.random() * 1200) == 0 ) {
+    if( Math.floor(Math.random() * RANDOMIZE) == 0 ) {
       this.dx = Math.random() * SPEED_MAX - SPEED_MAX / 2;
       this.dy = Math.random() * SPEED_MAX - SPEED_MAX / 2;
     }
@@ -119,7 +124,7 @@ modules.app
         this.timer = $timeout(function() {
           that.open = true;
           that.timer = null;
-        }, 1000);
+        }, OPEN_DELAY);
       }
     } else {
       this.open = this.on = false;
@@ -130,11 +135,11 @@ modules.app
       }
     }
 
-    return this.open;
+    return this.open ? this : null;
   };
 
   Student.prototype.draw = function(ctx, canvas, open) {
-    ctx.globalAlpha = open && !this.open ? 0.2 : 0.7 ;
+    ctx.globalAlpha = open && !this.open ? 0.1 : 0.7 ;
     ctx.fillStyle = this.location.color;
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);

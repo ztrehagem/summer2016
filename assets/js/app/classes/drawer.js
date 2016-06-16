@@ -1,11 +1,8 @@
 modules.app
 
-.factory('drawer', ['Students', function(Students) {
+.factory('drawer', ['Students', 'selector', function(Students, selector) {
   var students;
-
-  function clear(ctx, canvas) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-  }
+  var open;
 
   return {
     init: function(ctx, canvas) {
@@ -14,14 +11,19 @@ modules.app
     update: function(ctx, canvas) {
 
       // TODO onResize でやる
-      ctx.font = "28px 'Hiragino Kaku Gothic ProN'";
+      ctx.font = "24px 'Hiragino Kaku Gothic ProN'";
       ctx.textAlign = 'center';
 
-      students.update(ctx, canvas);
+      if( !open ) {
+        open = students.update(ctx, canvas);
+        if( open ) selector.init(ctx, canvas, open);
+      }
+      else open = !selector.update(ctx, canvas);
     },
     draw: function(ctx, canvas) {
-      clear(ctx, canvas);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       students.draw(ctx, canvas);
+      if( open ) selector.draw(ctx, canvas);
     }
   }
 }]);
