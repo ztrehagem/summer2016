@@ -1,6 +1,6 @@
 modules.app
 
-.factory('grower', [function() {
+.factory('selector.grower', [function() {
   var ctx, canvas;
   var start, current, target, theta, moment, mov;
   const SPEED = 0.06;

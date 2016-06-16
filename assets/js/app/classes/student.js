@@ -142,7 +142,7 @@ modules.app
     ctx.globalAlpha = 0.7;
     ctx.fillStyle = this.location.color;
     ctx.beginPath();
-    ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
+    ctx.arc(this.x, this.y, this.r + (this.on ? 10 : 0), 0, 2 * Math.PI);
     ctx.closePath();
     ctx.fill();
     ctx.globalAlpha = 1;

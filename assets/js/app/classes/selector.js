@@ -1,6 +1,6 @@
 modules.app
 
-.factory('selector', ['grower', function(grower) {
+.factory('selector', ['selector.grower', 'selector.shower', function(grower, shower) {
   var student;
   var state;
   const NONE = 0, GROW = 1, SHOW = 2, SHRINK = 3;
@@ -16,13 +16,29 @@ modules.app
     update: function(ctx, canvas) {
       switch (state) {
         case GROW: {
-          if( grower.update() ) state = SHOW;
+          if( grower.update() ) {
+            shower.init(ctx, canvas, student);
+            state = SHOW;
+          }
+          break;
+        }
+        case SHOW: {
+          shower.update();
           break;
         }
       }
     },
     draw: function(ctx, canvas) {
-      grower.draw(BG_COLOR);
+      switch (state) {
+        case GROW: {
+          grower.draw(BG_COLOR);
+          break;
+        }
+        case SHOW: {
+          shower.draw(BG_COLOR);
+          break;
+        }
+      }
     }
   }
 }]);
