@@ -27,7 +27,7 @@ modules.app
     that.open = null;
 
     this.students.forEach(function(student) {
-      that.open = that.open || student.checkMouse();
+      that.open = that.open || student.checkMouse(that.open);
       student.update(ctx, canvas);
     });
 

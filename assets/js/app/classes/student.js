@@ -113,11 +113,11 @@ modules.app
     }
   };
 
-  Student.prototype.checkMouse = function() {
+  Student.prototype.checkMouse = function(open) {
     var that = this;
 
     var onCircle = Math.pow(this.x - cursor.x, 2) + Math.pow(this.y - cursor.y, 2) < Math.pow(this.r, 2);
-    if( onCircle ) {
+    if( onCircle && !open ) {
       this.on = true;
 
       if( !this.timer ) {
@@ -139,7 +139,7 @@ modules.app
   };
 
   Student.prototype.draw = function(ctx, canvas, open) {
-    ctx.globalAlpha = open && !this.open ? 0.1 : 0.7 ;
+    ctx.globalAlpha = 0.7;
     ctx.fillStyle = this.location.color;
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);

@@ -2,7 +2,8 @@ modules.app
 
 .factory('grower', [function() {
   var ctx, canvas;
-  var current, target, theta;
+  var start, current, target, theta, moment, mov;
+  const SPEED = 0.06;
 
   return {
     init: function(_ctx, _canvas, student) {
@@ -19,42 +20,28 @@ modules.app
         y: canvas.height / 2,
         r: Math.sqrt(Math.pow(canvas.width, 2) + Math.pow(canvas.height, 2)) / 2
       };
-      theta = Math.atan((target.y - current.y) / (target.x - current.x));
-    },
-    update: function() {
-      const SPEED = 20;
 
-      let distance = {
-        x: target.x - current.x,
-        y: target.y - current.y
+      moment = {
+        x: (target.x - current.x) * SPEED,
+        y: (target.y - current.y) * SPEED,
+        r: (target.r - current.r) * SPEED
       };
 
-      distance.r = Math.sqrt(Math.pow(distance.x, 2) + Math.pow(distance.y, 2));
-
-      if( distance.r <= SPEED ) {
+      mov = 0;
+    },
+    update: function() {
+      if( (mov += SPEED) > 1 ) {
         current = target;
         return true;
       }
-
-      let sign = {
-        x: Math.sign(distance.x),
-        y: Math.sign(distance.y)
-      };
-
-      current.x += sign.x * Math.cos(theta) * SPEED;
-      current.y += sign.x * Math.sin(theta) * SPEED;
-      current.r += 80;
+      current.x += moment.x;
+      current.y += moment.y;
+      current.r += moment.r;
     },
-    draw: function() {
-      ctx.fillStyle = 'rgba(80, 80, 80, 1)';
+    draw: function(bgColor) {
+      ctx.fillStyle = bgColor;
       ctx.beginPath();
       ctx.arc(current.x, current.y, current.r, 0, 2 * Math.PI);
-      ctx.closePath();
-      ctx.fill();
-
-      ctx.fillStyle = 'red';
-      ctx.beginPath();
-      ctx.arc(current.x, current.y, 20, 0, 2 * Math.PI);
       ctx.closePath();
       ctx.fill();
     }

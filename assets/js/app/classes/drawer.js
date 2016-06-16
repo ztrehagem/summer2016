@@ -18,7 +18,10 @@ modules.app
         open = students.update(ctx, canvas);
         if( open ) selector.init(ctx, canvas, open);
       }
-      else open = !selector.update(ctx, canvas);
+      else {
+        students.update(ctx, canvas);
+        open = !selector.update(ctx, canvas);
+      }
     },
     draw: function(ctx, canvas) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);

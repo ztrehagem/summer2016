@@ -4,7 +4,8 @@ modules.app
   var student;
   var state;
   const NONE = 0, GROW = 1, SHOW = 2, SHRINK = 3;
-  var current, target, r;
+
+  const BG_COLOR = 'rgba(245, 245, 245, 0.9)';
 
   return {
     init: function(ctx, canvas, _student) {
@@ -21,7 +22,7 @@ modules.app
       }
     },
     draw: function(ctx, canvas) {
-      grower.draw();
+      grower.draw(BG_COLOR);
     }
   }
 }]);
