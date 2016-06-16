@@ -35,14 +35,20 @@ modules.app
       }
 
       let theta = Math.atan(distance.y / distance.x);
-      current.x += -Math.cos(theta) * SPEED;
-      current.y += -Math.sin(theta) * SPEED;
+      current.x += Math.cos(theta) * SPEED;
+      current.y += Math.sin(theta) * SPEED;
       r += 80;
     },
     draw: function() {
       ctx.fillStyle = 'rgba(80, 80, 80, 1)';
       ctx.beginPath();
       ctx.arc(current.x, current.y, r, 0, 2 * Math.PI);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.fillStyle = 'red';
+      ctx.beginPath();
+      ctx.arc(current.x, current.y, 20, 0, 2 * Math.PI);
       ctx.closePath();
       ctx.fill();
     }
