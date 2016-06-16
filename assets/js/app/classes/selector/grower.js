@@ -2,7 +2,7 @@ modules.app
 
 .factory('grower', [function() {
   var ctx, canvas;
-  var current, target, r;
+  var current, target, theta;
 
   return {
     init: function(_ctx, _canvas, student) {
@@ -11,13 +11,15 @@ modules.app
 
       current = {
         x: student.x,
-        y: student.y
+        y: student.y,
+        r: student.r
       };
       target = {
         x: canvas.width / 2,
-        y: canvas.height / 2
+        y: canvas.height / 2,
+        r: Math.sqrt(Math.pow(canvas.width, 2) + Math.pow(canvas.height, 2)) / 2
       };
-      r = student.r;
+      theta = Math.atan((target.y - current.y) / (target.x - current.x));
     },
     update: function() {
       const SPEED = 20;
@@ -34,15 +36,19 @@ modules.app
         return true;
       }
 
-      let theta = Math.atan(distance.y / distance.x);
-      current.x += Math.cos(theta) * SPEED;
-      current.y += Math.sin(theta) * SPEED;
-      r += 80;
+      let sign = {
+        x: Math.sign(distance.x),
+        y: Math.sign(distance.y)
+      };
+
+      current.x += sign.x * Math.cos(theta) * SPEED;
+      current.y += sign.x * Math.sin(theta) * SPEED;
+      current.r += 80;
     },
     draw: function() {
       ctx.fillStyle = 'rgba(80, 80, 80, 1)';
       ctx.beginPath();
-      ctx.arc(current.x, current.y, r, 0, 2 * Math.PI);
+      ctx.arc(current.x, current.y, current.r, 0, 2 * Math.PI);
       ctx.closePath();
       ctx.fill();
 
