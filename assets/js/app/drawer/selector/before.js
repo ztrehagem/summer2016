@@ -3,7 +3,7 @@ modules.app
 .service('selector.before', ['canvas', function(canvas) {
   var ctx = canvas.ctx;
   var start, current, target, theta, moment, mov;
-  const SPEED = 0.06;
+  const SPEED = 0.04;
 
   this.init = function(student) {
     current = {

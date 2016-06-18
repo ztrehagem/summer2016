@@ -3,7 +3,7 @@ modules.app
 .service('selector.after', ['canvas', function(canvas) {
   var ctx = canvas.ctx;
   var alpha;
-  const SPEED = 0.06;
+  const SPEED = 0.04;
 
   this.init = function() {
     alpha = 1;
