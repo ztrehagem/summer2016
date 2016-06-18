@@ -1,6 +1,6 @@
 modules.app
 
-.service('selector.grower', ['canvas', function(canvas) {
+.service('selector.before', ['canvas', function(canvas) {
   var ctx = canvas.ctx;
   var start, current, target, theta, moment, mov;
   const SPEED = 0.06;

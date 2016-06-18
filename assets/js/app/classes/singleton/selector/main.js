@@ -1,6 +1,6 @@
 modules.app
 
-.service('selector.shower', ['canvas', 'Locations', 'Animator', 'cursor', function(canvas, Locations, Animator, cursor) {
+.service('selector.main', ['canvas', 'Locations', 'Animator', 'cursor', function(canvas, Locations, Animator, cursor) {
   var ctx = canvas.ctx;
   var student;
   var locations = [];
