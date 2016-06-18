@@ -1,6 +1,6 @@
 modules.app
 
-.factory('Student', ['canvas', '$timeout', 'Locations', 'cursor', function(canvas, $timeout, Locations, cursor) {
+.factory('Student', ['canvas', '$timeout', 'Locations', 'cursor', 'CursorChecker', function(canvas, $timeout, Locations, cursor, CursorChecker) {
   var ctx = canvas.ctx;
 
   const SPEED_MAX = 0.7;
@@ -19,6 +19,7 @@ modules.app
     this.y = Math.random() * canvas.height;
     this.dx = Math.random() * SPEED_MAX - SPEED_MAX / 2;
     this.dy = Math.random() * SPEED_MAX - SPEED_MAX / 2;
+    this.checker = new CursorChecker(this, new CursorChecker.Circle());
   };
 
   Student.prototype.r = 100; // いまのところ定数
@@ -118,7 +119,8 @@ modules.app
     var that = this;
 
     // TODO この辺をモジュール化
-    var onCircle = Math.pow(this.x - cursor.x, 2) + Math.pow(this.y - cursor.y, 2) < Math.pow(this.r, 2);
+    // var onCircle = Math.pow(this.x - cursor.x, 2) + Math.pow(this.y - cursor.y, 2) < Math.pow(this.r, 2);
+    var onCircle = this.checker.on();
     if( onCircle && !open ) {
       this.on = true;
 
