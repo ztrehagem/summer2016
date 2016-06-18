@@ -19,9 +19,9 @@ modules.app
     });
   };
 
-  this.draw = function() {
+  this.draw = function(fadeoutProgress) {
     locations.forEach(function(location) {
-      location.draw();
+      location.draw(fadeoutProgress);
     });
   };
 }]);

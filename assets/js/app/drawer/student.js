@@ -8,7 +8,7 @@ modules.app
   const WALL_MARGIN = 30;
   const AIR_RESITANCE = 0.0001;
   const RANDOMIZE = 1200;
-  const OPEN_DELAY = 750;
+  const OPEN_DELAY = 800;
 
   function Student(student_raw) {
     this.id = student_raw.id;
@@ -137,7 +137,15 @@ modules.app
       }
     }
 
-    return this.open ? this : null;
+    // this.open = trueにするタイミングが非同期なので、少々特殊なロジック
+    if( this.open ) {
+      this.open = false;
+      if( this.timer ) {
+        $timeout.cancel(this.timer);
+        this.timer = null;
+      }
+      return this;
+    }
   };
 
   Student.prototype.draw = function(open) {

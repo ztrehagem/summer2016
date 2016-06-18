@@ -1,9 +1,9 @@
 modules.app
 
-.service('selector', ['canvas', 'selector.before', 'selector.main', function(canvas, before, main) {
+.service('selector', ['canvas', 'selector.before', 'selector.main', 'selector.after', function(canvas, before, main, after) {
   var student;
   var state;
-  const NONE = 0, BEFORE = 1, MAIN = 2, FADEOUT = 3;
+  const NONE = 0, BEFORE = 1, MAIN = 2, AFTER = 3;
 
   const BG_COLOR = 'rgba(245, 245, 245, 0.9)';
 
@@ -22,7 +22,16 @@ modules.app
         break;
       }
       case MAIN: {
-        main.update();
+        if( main.update() ) {
+          after.init();
+          state = AFTER;
+        }
+        break;
+      }
+      case AFTER: {
+        if( after.update() ) {
+          return true;
+        }
         break;
       }
     }
@@ -35,6 +44,10 @@ modules.app
       }
       case MAIN: {
         main.draw(BG_COLOR);
+        break;
+      }
+      case AFTER: {
+        after.draw(BG_COLOR);
         break;
       }
     }

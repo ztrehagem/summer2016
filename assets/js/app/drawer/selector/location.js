@@ -15,9 +15,9 @@ modules.app
   Location.prototype.update = function() {
     if( !this.appeared ) this.appeared = this.animator.update(0.25);
   };
-  Location.prototype.draw = function() {
+  Location.prototype.draw = function(fadeoutProgress) {
     ctx.fillStyle = this.color;
-    ctx.globalAlpha = this.progress * 0.8;
+    ctx.globalAlpha = this.progress * 0.8 * (1 - fadeoutProgress);
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
     ctx.closePath();
