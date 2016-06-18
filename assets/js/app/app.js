@@ -1,6 +1,6 @@
 angular.module('app')
 
-.run(['$window', 'canvas', 'drawer', 'cursor', function($window, canvas, drawer, cursor) {
+.run(['$window', 'canvas', 'parent', 'cursor', function($window, canvas, parent, cursor) {
   // TODO getLocationsなどの待機
   var requestAnimationFrame = $window.requestAnimationFrame || $window.mozRequestAnimationFrame || $window.webkitRequestAnimationFrame || $window.msRequestAnimationFrame;
 
@@ -8,12 +8,12 @@ angular.module('app')
   $window.addEventListener('resize', setCanvasWidth);
   $window.addEventListener('mousemove', cursor.onMouseMove);
 
-  drawer.init();
+  parent.init();
   frame();
 
   function frame() {
-    drawer.update();
-    drawer.draw();
+    parent.update();
+    parent.draw();
     requestAnimationFrame(frame);
   }
 

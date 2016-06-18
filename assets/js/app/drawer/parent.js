@@ -1,6 +1,6 @@
 modules.app
 
-.service('drawer', ['canvas', 'students', 'selector', function(canvas, students, selector) {
+.service('parent', ['canvas', 'students', 'selector', function(canvas, students, selector) {
   var ctx = canvas.ctx;
   var open;
 
