@@ -1,6 +1,6 @@
 modules.app
 
-.service('selector.closearea', ['canvas', 'Animator', 'CursorChecker', function(canvas, Animator, CursorChecker) {
+.service('selector.closearea', ['canvas', 'Animator', function(canvas, Animator) {
   var ctx = canvas.ctx;
 
   this.init = function(student) {
