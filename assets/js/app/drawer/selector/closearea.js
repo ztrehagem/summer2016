@@ -19,21 +19,23 @@ modules.app
 
   this.update = function() {
     if( !this.appeared ) this.appeared = this.animator.update(0.05);
-    this.on = cursor.y < this.height;
-    if( this.on ) {
-      if( !this.timer ) {
-        this.timer = $timeout(function() {
-          that.close = true;
-        }, CLICK_DELAY);
+    else {
+      this.on = cursor.y < this.height;
+      if( this.on ) {
+        if( !this.timer ) {
+          this.timer = $timeout(function() {
+            that.close = true;
+          }, CLICK_DELAY);
+        }
+      } else {
+        if( this.timer ) {
+          $timeout.cancel(this.timer);
+          this.timer = null;
+        }
       }
-    } else {
-      if( this.timer ) {
-        $timeout.cancel(this.timer);
-        this.timer = null;
-      }
-    }
 
-    return this.close;
+      return this.close;
+    }
   };
 
   this.draw = function(fadeoutProgress) {
