@@ -14,17 +14,13 @@ modules.app
 
   // TODO リファクタリング(openとか)
   this.update = function(_open) {
-    students.forEach(function(me) {
-      // TODO ここ、下のループ内に入れ込める
-      students.forEach(function(target) {
-        me.calcEachResistance(target); // お互いにぶつかった時の反発
-      });
-    });
-
     open = _open;
 
     students.forEach(function(student) {
-      open = open || student.checkMouse(open);
+      students.forEach(function(target) {
+        student.calcEachResistance(target); // お互いにぶつかった時の反発
+      });
+      open = open || student.checkMouse(open); // XXX student.checkMouseが実行されない場合の整合性s
       student.update(open);
     });
 

@@ -1,6 +1,6 @@
 modules.app
 
-.factory('Locations', ['apis', function(apis) {
+.service('Locations', ['apis', function(apis) {
   var locations;
 
   // XXX ここ、configか何かでpromiseにしないといつか死ぬ
@@ -8,19 +8,17 @@ modules.app
     locations = list;
   });
 
-  return {
-    get: function() {
-      return locations;
-    },
-    findById: function(id) {
-      var ret = null;
-      locations.forEach(function(location) {
-        if( location.id == id ) {
-          ret = location;
-          return false;
-        }
-      });
-      return ret;
-    }
-  }
+  this.get = function() {
+    return locations;
+  };
+  this.findById = function(id) {
+    var ret = null;
+    locations.forEach(function(location) {
+      if( location.id == id ) {
+        ret = location;
+        return false;
+      }
+    });
+    return ret;
+  };
 }]);
