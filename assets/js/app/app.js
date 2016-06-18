@@ -1,20 +1,19 @@
 angular.module('app')
 
-.run(['$window', '$document', 'drawer', 'cursor', function($window, $document, drawer, cursor) {
-  var canvas = $document.find('canvas')[0];
-  var ctx = canvas.getContext('2d');
+.run(['$window', 'canvas', 'drawer', 'cursor', function($window, canvas, drawer, cursor) {
+  // TODO getLocationsなどの待機
   var requestAnimationFrame = $window.requestAnimationFrame || $window.mozRequestAnimationFrame || $window.webkitRequestAnimationFrame || $window.msRequestAnimationFrame;
 
   setCanvasWidth();
   $window.addEventListener('resize', setCanvasWidth);
   $window.addEventListener('mousemove', cursor.onMouseMove);
 
-  drawer.init(ctx, canvas);
+  drawer.init();
   frame();
 
   function frame() {
-    drawer.update(ctx, canvas);
-    drawer.draw(ctx, canvas);
+    drawer.update();
+    drawer.draw();
     requestAnimationFrame(frame);
   }
 

@@ -1,6 +1,7 @@
 modules.app
 
-.factory('Student', ['$timeout', 'Locations', 'cursor', function($timeout, Locations, cursor) {
+.factory('Student', ['canvas', '$timeout', 'Locations', 'cursor', function(canvas, $timeout, Locations, cursor) {
+  var ctx = canvas.ctx;
 
   const SPEED_MAX = 0.7;
   const NAME_OFFSET_Y = 40;
@@ -9,10 +10,10 @@ modules.app
   const RANDOMIZE = 1200;
   const OPEN_DELAY = 750;
 
-  function Student(id, name, location, ctx, canvas) {
-    this.id = id;
-    this.name = name;
-    this.location = Locations.findById(location);
+  function Student(student_raw) {
+    this.id = student_raw.id;
+    this.name = student_raw.name;
+    this.location = Locations.findById(student_raw.location);
 
     this.x = Math.random() * canvas.width;
     this.y = Math.random() * canvas.height;
@@ -22,9 +23,9 @@ modules.app
 
   Student.prototype.r = 100; // いまのところ定数
 
-  Student.prototype.update = function(ctx, canvas, open) {
+  Student.prototype.update = function(open) {
     if( !open && this.on ) return;
-    this.calcWallResistance(canvas);
+    this.calcWallResistance();
     this.calcAirResistance();
     this.limimtSpeed();
     this.applyRandomSpeed();
@@ -32,7 +33,7 @@ modules.app
   };
 
   // 壁にぶつかる
-  Student.prototype.calcWallResistance = function(canvas) {
+  Student.prototype.calcWallResistance = function() {
     if( this.x < this.r + WALL_MARGIN ) {
       this.dx *= -1;
       this.x = this.r + WALL_MARGIN;
@@ -116,6 +117,7 @@ modules.app
   Student.prototype.checkMouse = function(open) {
     var that = this;
 
+    // TODO この辺をモジュール化
     var onCircle = Math.pow(this.x - cursor.x, 2) + Math.pow(this.y - cursor.y, 2) < Math.pow(this.r, 2);
     if( onCircle && !open ) {
       this.on = true;
@@ -138,7 +140,7 @@ modules.app
     return this.open ? this : null;
   };
 
-  Student.prototype.draw = function(ctx, canvas, open) {
+  Student.prototype.draw = function(open) {
     ctx.globalAlpha = 0.7;
     ctx.fillStyle = this.location.color;
     ctx.beginPath();

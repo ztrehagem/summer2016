@@ -1,15 +1,12 @@
 modules.app
 
-.factory('selector.grower', [function() {
-  var ctx, canvas;
+.factory('selector.grower', ['canvas', function(canvas) {
+  var ctx = canvas.ctx;
   var start, current, target, theta, moment, mov;
   const SPEED = 0.06;
 
   return {
-    init: function(_ctx, _canvas, student) {
-      ctx = _ctx;
-      canvas = _canvas;
-
+    init: function(student) {
       current = {
         x: student.x,
         y: student.y,

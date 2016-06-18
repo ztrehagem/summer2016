@@ -1,46 +1,39 @@
 modules.app
 
-// TODO コンストラクタをやめる
-.factory('Students', ['Student', 'apis', function(Student, apis) {
+.service('students', ['Student', 'apis', function(Student, apis) {
+  var students = [];
+  var open;
 
-  function Students(ctx, canvas) {
-    var that = this;
-
-    this.students = [];
-
+  this.init = function() {
     apis.getStudentList(function(list) {
-      list.forEach(function(student) {
-        that.students.push(new Student(student.id, student.name, student.location, ctx, canvas));
+      list.forEach(function(student_raw) {
+        students.push(new Student(student_raw));
       });
     });
   };
 
-  Students.prototype.update = function(ctx, canvas, open) {
-    var that = this;
-
-    this.students.forEach(function(me) {
-      that.students.forEach(function(target) {
+  // TODO リファクタリング(openとか)
+  this.update = function(_open) {
+    students.forEach(function(me) {
+      // TODO ここ、下のループ内に入れ込める
+      students.forEach(function(target) {
         me.calcEachResistance(target); // お互いにぶつかった時の反発
       });
     });
 
-    that.open = open;
+    open = _open;
 
-    this.students.forEach(function(student) {
-      that.open = that.open || student.checkMouse(that.open);
-      student.update(ctx, canvas, that.open);
+    students.forEach(function(student) {
+      open = open || student.checkMouse(open);
+      student.update(open);
     });
 
-    return this.open;
+    return open;
   };
 
-  Students.prototype.draw = function(ctx, canvas) {
-    var that = this;
-
-    this.students.forEach(function(student) {
-      student.draw(ctx, canvas, that.open);
+  this.draw = function() {
+    students.forEach(function(student) {
+      student.draw(open);
     });
   };
-
-  return Students;
 }]);

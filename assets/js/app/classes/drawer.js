@@ -1,32 +1,29 @@
 modules.app
 
-.factory('drawer', ['Students', 'selector', function(Students, selector) {
-  var students;
+.service('drawer', ['canvas', 'students', 'selector', function(canvas, students, selector) {
+  var ctx = canvas.ctx;
   var open;
 
-  return {
-    init: function(ctx, canvas) {
-      students = new Students(ctx, canvas);
-    },
-    update: function(ctx, canvas) {
+  this.init = function() {
+    students.init();
+  };
+  this.update = function() {
+    // TODO onResize でやる？否、毎フレーム必要か
+    ctx.font = "50px 'Hiragino Kaku Gothic ProN'";
+    ctx.textAlign = 'center';
 
-      // TODO onResize でやる
-      ctx.font = "50px 'Hiragino Kaku Gothic ProN'";
-      ctx.textAlign = 'center';
-
-      if( !open ) {
-        open = students.update(ctx, canvas);
-        if( open ) selector.init(ctx, canvas, open);
-      }
-      else {
-        students.update(ctx, canvas, open);
-        open = !selector.update(ctx, canvas);
-      }
-    },
-    draw: function(ctx, canvas) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      students.draw(ctx, canvas);
-      if( open ) selector.draw(ctx, canvas);
+    if( !open ) {
+      open = students.update();
+      if( open ) selector.init(open);
     }
-  }
+    else {
+      students.update(open);
+      open = !selector.update();
+    }
+  };
+  this.draw = function() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    students.draw();
+    if( open ) selector.draw();
+  };
 }]);

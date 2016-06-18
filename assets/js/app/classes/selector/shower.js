@@ -1,7 +1,8 @@
 modules.app
 
-.factory('selector.shower', ['Locations', 'Animator', 'cursor', function(Locations, Animator, cursor) {
-  var ctx, canvas, student;
+.factory('selector.shower', ['canvas', 'Locations', 'Animator', 'cursor', function(canvas, Locations, Animator, cursor) {
+  var ctx = canvas.ctx;
+  var student;
   var locations = [];
 
   function Location(location, index) {
@@ -19,9 +20,7 @@ modules.app
   var closearea;
 
   return {
-    init: function(_ctx, _canvas, _student) {
-      ctx = _ctx;
-      canvas = _canvas;
+    init: function(_student) {
       student = _student;
 
       locations = Locations.get();
