@@ -1,6 +1,6 @@
 modules.app
 
-.service('selector.closearea', ['canvas', 'Animator', 'cursor', '$timeout', function(canvas, Animator, cursor, $timeout) {
+.service('selector.closearea', ['canvas', 'Animator', 'CursorChecker', '$timeout', function(canvas, Animator, CursorChecker, $timeout) {
   var ctx = canvas.ctx;
   var that = this;
 
@@ -12,34 +12,19 @@ modules.app
     this.height = 0;
     this.animator = new Animator(this, animation);
     this.appeared = false;
-    this.on = false;
-    this.timer = null;
-    this.close = false;
+    this.cursor = new CursorChecker(this, new CursorChecker.Functions.Rect());
   };
 
   this.update = function() {
     if( !this.appeared ) this.appeared = this.animator.update(0.05);
     else {
-      this.on = cursor.y < this.height;
-      if( this.on ) {
-        if( !this.timer ) {
-          this.timer = $timeout(function() {
-            that.close = true;
-          }, CLICK_DELAY);
-        }
-      } else {
-        if( this.timer ) {
-          $timeout.cancel(this.timer);
-          this.timer = null;
-        }
-      }
-
-      return this.close;
+      this.cursor.update();
+      return this.cursor.click;
     }
   };
 
   this.draw = function(fadeoutProgress) {
-    ctx.globalAlpha = (this.on ? 0.6 : 0.8) * (1 - fadeoutProgress);
+    ctx.globalAlpha = (this.cursor.on ? 0.6 : 0.8) * (1 - fadeoutProgress);
     ctx.fillStyle = this.color;
     ctx.fillRect(0, 0, canvas.width, this.height);
     ctx.globalAlpha = 1 - fadeoutProgress;

@@ -1,6 +1,6 @@
 modules.app
 
-.factory('Student', ['canvas', '$timeout', 'Locations', 'cursor', function(canvas, $timeout, Locations, cursor) {
+.factory('Student', ['canvas', '$timeout', 'Locations', 'CursorChecker', function(canvas, $timeout, Locations, CursorChecker) {
   var ctx = canvas.ctx;
 
   const SPEED_MAX = 0.7;
@@ -19,11 +19,13 @@ modules.app
     this.y = Math.random() * canvas.height;
     this.dx = Math.random() * SPEED_MAX - SPEED_MAX / 2;
     this.dy = Math.random() * SPEED_MAX - SPEED_MAX / 2;
+    this.cursor = new CursorChecker(this, new CursorChecker.Functions.Circle());
   };
 
   Student.prototype.r = 100; // いまのところ定数
 
   Student.prototype.update = function(open) {
+    this.cursor.update(open);
     if( !open && this.on ) return;
     this.calcWallResistance();
     this.calcAirResistance();
@@ -115,37 +117,8 @@ modules.app
   };
 
   Student.prototype.checkMouse = function(open) {
-    var that = this;
-
-    // TODO この辺をモジュール化
-    var onCircle = Math.pow(this.x - cursor.x, 2) + Math.pow(this.y - cursor.y, 2) < Math.pow(this.r, 2);
-    if( onCircle && !open ) {
-      this.on = true;
-
-      if( !this.timer ) {
-        this.timer = $timeout(function() {
-          that.open = true;
-          that.timer = null;
-        }, OPEN_DELAY);
-      }
-    } else {
-      this.open = this.on = false;
-
-      if( this.timer ) {
-        $timeout.cancel(this.timer);
-        this.timer = null;
-      }
-    }
-
-    // this.open = trueにするタイミングが非同期なので、少々特殊なロジック
-    if( this.open ) {
-      this.open = false;
-      if( this.timer ) {
-        $timeout.cancel(this.timer);
-        this.timer = null;
-      }
-      return this;
-    }
+    this.on = this.cursor.on;
+    if( this.cursor.click ) return this;
   };
 
   Student.prototype.draw = function(open) {
