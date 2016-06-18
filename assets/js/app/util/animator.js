@@ -13,17 +13,5 @@ modules.app
     return this.fn(this.target, this.start, this.t += dt, this);
   };
 
-  Animator.fn = {
-    'selector.shower.closearea': function(target, start, t, obj) {
-      obj.LMT = obj.LMT || 220;
-
-      if( t >= 1 ) {
-        target.height = obj.LMT;
-        return true;
-      }
-      target.height = start.height + t * obj.LMT;
-    }
-  };
-
   return Animator;
 }]);
