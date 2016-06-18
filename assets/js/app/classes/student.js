@@ -20,9 +20,10 @@ modules.app
     this.dy = Math.random() * SPEED_MAX - SPEED_MAX / 2;
   };
 
-  Student.prototype.r = 70; // いまのところ定数
+  Student.prototype.r = 100; // いまのところ定数
 
-  Student.prototype.update = function(ctx, canvas) {
+  Student.prototype.update = function(ctx, canvas, open) {
+    if( !open && this.on ) return;
     this.calcWallResistance(canvas);
     this.calcAirResistance();
     this.limimtSpeed();
@@ -85,7 +86,6 @@ modules.app
 
   // 速度を位置に反映
   Student.prototype.calcPosition = function() {
-    if( this.on ) return;
     this.x += this.dx;
     this.y += this.dy;
   };
@@ -142,7 +142,7 @@ modules.app
     ctx.globalAlpha = 0.7;
     ctx.fillStyle = this.location.color;
     ctx.beginPath();
-    ctx.arc(this.x, this.y, this.r + (this.on ? 10 : 0), 0, 2 * Math.PI);
+    ctx.arc(this.x, this.y, this.r + ((this.on && !open) ? 10 : 0), 0, 2 * Math.PI);
     ctx.closePath();
     ctx.fill();
     ctx.globalAlpha = 1;

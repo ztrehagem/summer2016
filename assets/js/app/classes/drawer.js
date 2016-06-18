@@ -11,7 +11,7 @@ modules.app
     update: function(ctx, canvas) {
 
       // TODO onResize でやる
-      ctx.font = "24px 'Hiragino Kaku Gothic ProN'";
+      ctx.font = "50px 'Hiragino Kaku Gothic ProN'";
       ctx.textAlign = 'center';
 
       if( !open ) {
@@ -19,7 +19,7 @@ modules.app
         if( open ) selector.init(ctx, canvas, open);
       }
       else {
-        students.update(ctx, canvas);
+        students.update(ctx, canvas, open);
         open = !selector.update(ctx, canvas);
       }
     },

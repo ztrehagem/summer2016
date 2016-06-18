@@ -15,7 +15,7 @@ modules.app
     });
   };
 
-  Students.prototype.update = function(ctx, canvas) {
+  Students.prototype.update = function(ctx, canvas, open) {
     var that = this;
 
     this.students.forEach(function(me) {
@@ -24,11 +24,11 @@ modules.app
       });
     });
 
-    that.open = null;
+    that.open = open;
 
     this.students.forEach(function(student) {
       that.open = that.open || student.checkMouse(that.open);
-      student.update(ctx, canvas);
+      student.update(ctx, canvas, that.open);
     });
 
     return this.open;

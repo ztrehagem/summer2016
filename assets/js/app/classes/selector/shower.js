@@ -1,6 +1,6 @@
 modules.app
 
-.factory('selector.shower', ['Locations', 'Animator', function(Locations, Animator) {
+.factory('selector.shower', ['Locations', 'Animator', 'cursor', function(Locations, Animator, cursor) {
   var ctx, canvas, student;
   var locations = [];
 
@@ -11,7 +11,12 @@ modules.app
     this.y = canvas.height / 2;
     this.alpha = 0;
   }
-  Location.prototype.r = 60;
+  Location.prototype.r = 100;
+  Location.prototype.update = function() {
+    this.animator.update(0.25);
+  };
+
+  var closearea;
 
   return {
     init: function(_ctx, _canvas, _student) {
@@ -24,13 +29,22 @@ modules.app
         return new Location(location, index);
       });
       locations.forEach(function(location, index) {
-        location.animator = new Animator(location, Animator.fn['selector.shower'], -index + Math.PI / 4);
+        location.animator = new Animator(location, Animator.fn['selector.shower.location'], -index + Math.PI / 4);
       });
+
+      closearea = {
+        height: 0,
+        update: function() {
+          this.animator.update(0.1);
+        }
+      };
+      closearea.animator = new Animator(closearea, Animator.fn['selector.shower.closearea']);
     },
     update: function() {
       locations.forEach(function(location) {
-        location.animator.update(0.2);
+        location.update();
       });
+      closearea.update();
     },
     draw: function(bgColor) {
       ctx.fillStyle = bgColor;
@@ -38,13 +52,24 @@ modules.app
 
       locations.forEach(function(location) {
         ctx.fillStyle = location.color;
-        ctx.globalAlpha = location.alpha;
+        ctx.globalAlpha = location.alpha * 0.8;
         ctx.beginPath();
         ctx.arc(location.x, location.y, location.r, 0, 2 * Math.PI);
         ctx.closePath();
         ctx.fill();
         ctx.globalAlpha = 1;
       });
+
+      ctx.globalAlpha = 0.8;
+      ctx.fillStyle = student.location.color;
+      ctx.fillRect(0, 0, canvas.width, closearea.height);
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = 'white';
+      ctx.textAlign = 'left';
+      ctx.fillText(student.name, 200, closearea.height - 100);
+      ctx.textAlign = 'right';
+      ctx.fillText('close', canvas.width - 200, closearea.height - 100);
+      ctx.textAlign = 'center';
     }
   };
 }]);
