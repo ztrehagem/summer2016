@@ -39,7 +39,7 @@ gulp.task('js', function() {
       .pipe(plumber())
       .pipe(gulpif(!options.production, sourcemaps.init()))
       .pipe(gulpif(task.concat, concat(task.destfile)))
-      .pipe(uglify())
+      .pipe(gulpif(options.production, uglify()))
       .pipe(gulpif(!options.production, sourcemaps.write('./')))
       .pipe(gulp.dest(task.dest));
   });
