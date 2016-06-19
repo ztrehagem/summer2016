@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var sass = require('gulp-sass');
 var uglify = require('gulp-uglify');
 var html = require('gulp-minify-html');
+var sourcemaps = require('gulp-sourcemaps');
 var plumber = require("gulp-plumber");
 var browser = require("browser-sync");
 var concat = require('gulp-concat');
@@ -12,7 +13,9 @@ gulp.task('sass', function() {
   forEachTask(tasks.sass, function(task) {
     gulp.src(task.src)
       .pipe(plumber())
+      .pipe(sourcemaps.init())
       .pipe(sass())
+      .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest(task.dest));
   });
 });
@@ -21,8 +24,10 @@ gulp.task('js', function() {
   forEachTask(tasks.js, function(task) {
     gulp.src(task.src)
       .pipe(plumber())
+      .pipe(sourcemaps.init())
       .pipe(task.concat ? concat(task.destfile) : nop())
       .pipe(uglify())
+      .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest(task.dest));
   });
 });
