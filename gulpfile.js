@@ -7,15 +7,28 @@ var plumber = require("gulp-plumber");
 var browser = require("browser-sync");
 var concat = require('gulp-concat');
 var nop = require('gulp-nop');
+var gulpif = require('gulp-if');
+var minimist = require('minimist');
 var tasks = require('./gulp-tasks.js');
+
+var options = minimist(process.argv.slice(2), {
+  alias: {
+    p: 'production'
+  },
+  default: {
+    production: false
+  }
+});
+
+console.log(options);
 
 gulp.task('sass', function() {
   forEachTask(tasks.sass, function(task) {
     gulp.src(task.src)
       .pipe(plumber())
-      .pipe(sourcemaps.init())
+      .pipe(gulpif(!options.production, sourcemaps.init()))
       .pipe(sass())
-      .pipe(sourcemaps.write('./'))
+      .pipe(gulpif(!options.production, sourcemaps.write('./')))
       .pipe(gulp.dest(task.dest));
   });
 });
@@ -24,10 +37,10 @@ gulp.task('js', function() {
   forEachTask(tasks.js, function(task) {
     gulp.src(task.src)
       .pipe(plumber())
-      .pipe(sourcemaps.init())
-      .pipe(task.concat ? concat(task.destfile) : nop())
+      .pipe(gulpif(!options.production, sourcemaps.init()))
+      .pipe(gulpif(task.concat, concat(task.destfile)))
       .pipe(uglify())
-      .pipe(sourcemaps.write('./'))
+      .pipe(gulpif(!options.production, sourcemaps.write('./')))
       .pipe(gulp.dest(task.dest));
   });
 });
