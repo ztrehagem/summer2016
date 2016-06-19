@@ -4,8 +4,6 @@ modules.app
   var ctx = canvas.ctx;
   var that = this;
 
-  const CLICK_DELAY = 800;
-
   this.init = function(student) {
     this.color = student.location.color;
     this.name = student.name;

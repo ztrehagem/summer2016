@@ -8,7 +8,6 @@ modules.app
   const WALL_MARGIN = 30;
   const AIR_RESITANCE = 0.0001;
   const RANDOMIZE = 1200;
-  const OPEN_DELAY = 800;
 
   function Student(student_raw) {
     this.id = student_raw.id;
