@@ -1,44 +1,51 @@
 modules.app
 
-.service('selector.before', ['canvas', function(canvas) {
+.service('selector.before', ['canvas', 'Animator', function(canvas, Animator) {
   var ctx = canvas.ctx;
-  var start, current, target, theta, moment, mov;
+  var circle;
+  var animator;
   const SPEED = 0.04;
 
   this.init = function(student) {
-    current = {
+    circle = {
       x: student.x,
       y: student.y,
       r: student.r
     };
-    target = {
-      x: canvas.width / 2,
-      y: canvas.height / 2,
-      r: Math.sqrt(Math.pow(canvas.width, 2) + Math.pow(canvas.height, 2)) / 2
-    };
-
-    moment = {
-      x: (target.x - current.x) * SPEED,
-      y: (target.y - current.y) * SPEED,
-      r: (target.r - current.r) * SPEED
-    };
-
-    mov = 0;
+    animator = new Animator(circle, animation);
+    initAnimator(animator);
   };
   this.update = function() {
-    if( (mov += SPEED) > 1 ) {
-      current = target;
-      return true;
-    }
-    current.x += moment.x;
-    current.y += moment.y;
-    current.r += moment.r;
+    return animator.update(SPEED);
   };
   this.draw = function(bgColor) {
     ctx.fillStyle = bgColor;
     ctx.beginPath();
-    ctx.arc(current.x, current.y, current.r, 0, 2 * Math.PI);
+    ctx.arc(circle.x, circle.y, circle.r, 0, 2 * Math.PI);
     ctx.closePath();
     ctx.fill();
   };
+
+  function initAnimator(animator) {
+    animator.distance = {
+      x: (canvas.width / 2 - animator.target.x),
+      y: (canvas.height / 2 - animator.target.y),
+      r: Math.sqrt(Math.pow(canvas.width, 2) + Math.pow(canvas.height, 2)) / 2 - animator.target.r
+    };
+  }
+
+  function animation(target, start, t, animator) {
+    var done;
+
+    if( t > 1 ) {
+      t = 1;
+      done = true;
+    }
+
+    target.x = start.x + animator.distance.x * t;
+    target.y = start.y + animator.distance.y * t;
+    target.r = start.r + animator.distance.r * t;
+
+    return done
+  }
 }]);

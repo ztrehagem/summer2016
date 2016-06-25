@@ -14,9 +14,11 @@ modules.app
   };
 
   this.update = function() {
+    var ret = null;
     locations.forEach(function(location) {
-      location.update();
+      ret = location.update() || ret;
     });
+    return ret;
   };
 
   this.draw = function(fadeoutProgress) {

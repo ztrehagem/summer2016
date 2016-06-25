@@ -17,6 +17,7 @@ modules.app
     if( !this.appeared ) this.appeared = this.animator.update(0.25);
     else {
       this.cursor.update();
+      if( this.cursor.click ) return this;
     }
   };
   Location.prototype.draw = function(fadeoutProgress) {
