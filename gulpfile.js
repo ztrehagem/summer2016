@@ -1,3 +1,5 @@
-require('./gulp-template/tasks.js')(
-  require('./gulp-template/resources.js')
-);
+var createTemplateResouces = require('./gulp-template/resources.js');
+var defineTemplateTasks = require('./gulp-template/tasks.js');
+
+var resources = createTemplateResouces('assets/', 'public/');
+defineTemplateTasks(resources);
