@@ -1,5 +1,10 @@
-var createTemplateResouces = require('./gulp-template/resources.js');
-var defineTemplateTasks = require('./gulp-template/tasks.js');
+var Resource = require('./gulp-template/resource.js');
+var GulpTask = require('./gulp-template/gulp-task.js');
 
-var resources = createTemplateResouces('assets/', 'public/');
-defineTemplateTasks(resources);
+Resource.config.srcDir = 'assets/';
+
+Resource.add('html', Resource.defaults.html());
+Resource.add('sass', Resource.defaults.sass());
+Resource.add('js', Resource.defaults.js());
+
+GulpTask.defineDefaults();
