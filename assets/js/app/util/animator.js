@@ -7,7 +7,7 @@ modules.app
     this.start = Object.assign({}, target);
     this.fn = fn || angular.noop;
     this.t = t0 || 0;
-  };
+  }
 
   Animator.prototype.update = function(dt) {
     return this.fn(this.target, this.start, this.t += dt, this);

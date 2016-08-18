@@ -8,7 +8,7 @@ modules.app
     this.x = singleWidth * index + singleWidth / 2;
     this.y = canvas.height / 2;
     this.progress = 0;
-    this.animator = new Animator(this, animation, -index + Math.PI / 4)
+    this.animator = new Animator(this, animation, -index + Math.PI / 4);
     this.appeared = false;
     this.cursor = new CursorChecker(this, new CursorChecker.Functions.Circle());
   }

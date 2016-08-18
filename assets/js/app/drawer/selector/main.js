@@ -1,9 +1,8 @@
 modules.app
 
-.service('selector.main', ['canvas', 'selector.locations', 'selector.closearea', 'Animator', function(canvas, locations, closearea, Animator) {
+.service('selector.main', ['canvas', 'selector.locations', 'selector.closearea', 'selector.selected', 'Animator', function(canvas, locations, closearea, selected, Animator) {
   var ctx = canvas.ctx;
   var student; // XXX いらない？
-  var closearea;
   var selectedLocation;
   var close;
   var animator;
@@ -18,19 +17,17 @@ modules.app
     animator = new Animator({}, animation);
   };
   this.update = function() {
-    if( !close && !selectedLocation ) {
+    if( close ) {
+      return animator.update(FADEOUT_SPEED);
+    } else if( selectedLocation ) {
+      close = selected.update();
+    } else {
       selectedLocation = locations.update();
       close = closearea.update();
 
       if( selectedLocation ) {
-        // select.init(selectedLocation);
+        selected.init(selectedLocation);
       }
-
-    } else if( selectedLocation ) {
-      // close = select.update();
-
-    } else if( close ) {
-      return animator.update(FADEOUT_SPEED);
     }
   };
   this.draw = function(bgColor) {
@@ -40,7 +37,7 @@ modules.app
     locations.draw(animator.t);
     closearea.draw(animator.t);
     if( selectedLocation ) {
-      // select.draw(animator.t);
+      selected.draw(animator.t);
     }
   };
 
